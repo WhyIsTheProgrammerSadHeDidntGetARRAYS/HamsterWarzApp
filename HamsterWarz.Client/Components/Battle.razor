@@ -1,0 +1,47 @@
+﻿@page "/battle"
+@inject IHamsterServiceClient service;
+
+
+<h1 style="color:black;">Vote for the cutest hamster</h1>
+
+@if (Hamsters == null)
+{
+    <MudProgressCircular Color="Color.Primary" Style="height:70px;width:70px;" Indeterminate="true" />
+}
+else
+{
+    @foreach (var hamster in Hamsters)
+    {
+        <div class="container-fluid">
+        <div class="card text-white bg-dark mt-2" style="width: 18rem;">
+            <img class="card-img-top img-fluid" src="@hamster.ImageUrl" alt="Card image cap">
+            <div class="card-body">
+                <h5 class="card-title">@hamster.Name</h5>
+            </div>
+        </div>
+        <br/>
+        <button style="width:200px" class="btn btn-dark btn-lg" @onclick="() => MatchCompleted(Hamsters, hamster.Id)">Vote</button>
+        </div>
+    }
+    <br />
+}
+
+@code {
+
+    private IEnumerable<Hamster>? Hamsters { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadNextBattleImages();
+    }
+    private async Task LoadNextBattleImages()
+    {
+        Hamsters = await service.GetCompetitorsAsync();
+    }
+    private async Task MatchCompleted(IEnumerable<Hamster> hamsters, int winnerId)
+    {
+        await service.VoteHamster(hamsters, winnerId);
+        await service.RegisterMatchData(hamsters, winnerId);
+        await LoadNextBattleImages();
+    }
+}

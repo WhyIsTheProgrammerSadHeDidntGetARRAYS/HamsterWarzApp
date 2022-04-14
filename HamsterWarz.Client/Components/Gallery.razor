@@ -1,0 +1,34 @@
+﻿@using HamsterWarz.Client.Services
+@using HamsterWarz.Entities.Models
+@inject IHamsterServiceClient service
+@page "/hamsters"
+
+@if(Hamsters == null)
+{
+    <MudProgressCircular Color="Color.Primary" Style="height:70px;width:70px;" Indeterminate="true" />
+}
+else
+{
+    <h1>Gallery</h1>
+    <MudGrid Spacing="@spacing" Justify="Justify.SpaceAround" Class="mt-6 mb-6">
+    @foreach (var hamster in Hamsters)
+    {
+        <HamsterCard ImageUrl="@hamster.ImageUrl" Name="@hamster.Name"  
+            Wins="@hamster.Wins" Defeats="@hamster.Defeats" ButtonText="Details" />
+    }
+    
+    </MudGrid>
+}
+
+@code {
+    private IEnumerable<Hamster> Hamsters { get; set; }
+    public int spacing { get; set; } = 2;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await Task.Delay(1000); //TODO: TEST För att se hur mudblazor loading-component ser ut med lite delay
+        await base.OnInitializedAsync();
+        Hamsters = await service.GetHamstersAsync();
+    }
+
+}

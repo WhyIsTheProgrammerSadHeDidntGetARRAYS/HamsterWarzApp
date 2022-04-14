@@ -1,0 +1,28 @@
+﻿@page "/statistics"
+@inject IHamsterServiceClient _service;
+
+
+@if(Hamsters == null)
+{
+    <h4>...Loading</h4>
+}
+else
+{
+    <h1>Top five competitors!</h1>
+    <MudGrid Spacing=3 Justify="Justify.SpaceAround" Class="mt-6 mb-6">
+    @foreach (var hamster in Hamsters)
+    {
+        <HamsterCard ImageUrl=@hamster.ImageUrl Name=@hamster.Name Wins=@hamster.Wins Defeats=@hamster.Defeats></HamsterCard>
+    }
+    </MudGrid>
+    
+}
+
+@code {
+    private IEnumerable<Hamster> Hamsters;
+    
+    protected override async Task OnInitializedAsync()
+    {
+        Hamsters = await _service.GetTopCompetitors();
+    }
+}
