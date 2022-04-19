@@ -11,7 +11,10 @@ namespace HamsterWarz.Entities.Models
     {
         [Key]
         public int Id { get; set; }
-        public int WinnerId { get; set; }
-        public int LoserId { get; set; }
+        public int? WinnerId { get; set; }
+        //public Hamster? Winner { get; set; }
+        public int? LoserId { get; set; }
+        //public Hamster? Loser { get; set; }
+        
     }
 }

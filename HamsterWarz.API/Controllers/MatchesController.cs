@@ -1,5 +1,6 @@
 ﻿using HamsterWarz.API.Data.Interfaces;
 using HamsterWarz.API.Helper;
+using HamsterWarz.Entities.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,12 +11,28 @@ namespace HamsterWarz.API.Controllers
     public class MatchesController : ControllerBase
     {
         private readonly IMatchDataService _service;
-        
+
         public MatchesController(IMatchDataService service)
         {
             _service = service;
         }
-        
+        //Getting all matchdata
+        [Route("getall")]
+        [HttpGet]
+        public async Task<IEnumerable<MatchData>> GetAll()
+        {
+            return await _service.GetAllMatchesAsync();
+        }
+
+        //Getting specific matchdata
+        [Route("get/{id}")]
+        [HttpGet]
+        public async Task<MatchData> GetById(int id)
+        {
+            return await _service.GetMatchById(id);
+        }
+
+        //posting match data
         [Route("registermatch")]
         [HttpPost]
         public async Task<IActionResult> PostMatchData(TransferObject obj)
@@ -33,6 +50,13 @@ namespace HamsterWarz.API.Controllers
                 return BadRequest(ex.Message);
             }
             return Ok(obj.Hamsters);
+        }
+
+        [Route("matches/{id}")]
+        [HttpGet]
+        public dynamic GetHamsterMatchData(int id)
+        {
+            return _service.GetSpecificHamsterMatchData(id);
         }
     }
 }

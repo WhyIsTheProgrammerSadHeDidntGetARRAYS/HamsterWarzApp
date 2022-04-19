@@ -19,14 +19,14 @@ namespace HamsterWarz.Client.Services
 
         public async Task<IEnumerable<Hamster>> GetHamstersAsync()
         {
-            var response = await _httpClient.GetFromJsonAsync<IEnumerable<Hamster>>("api/hamsters/getall");
+            var response = await _httpClient.GetFromJsonAsync<IEnumerable<Hamster>>("api/hamsters");
             return response;
         }
 
         public async Task<IEnumerable<Hamster>> GetCompetitorsAsync() 
         {
             //TODO: kanske ska man istället göra filtreringen av datan på client-sidan? Har ju redan en get all från apin, som jag kan filtrera på här
-            var content = await _httpClient.GetFromJsonAsync<List<Hamster>>("api/hamsters/getcompetitors");
+            var content = await _httpClient.GetFromJsonAsync<List<Hamster>>("api/hamsters/random");
             return content;
 
         }
@@ -35,7 +35,7 @@ namespace HamsterWarz.Client.Services
             await _httpClient.PostAsJsonAsync("/api/hamsters/vote", new { hamsters, id });
         }
 
-        public async Task<IEnumerable<Hamster>> GetTopCompetitors()
+        public async Task<IEnumerable<Hamster>> GetTopFiveCompetitors()
         {
             var list = await _httpClient.GetFromJsonAsync<IEnumerable<Hamster>>("api/hamsters/topfive");
             return list;
@@ -44,6 +44,12 @@ namespace HamsterWarz.Client.Services
         public async Task RegisterMatchData(IEnumerable<Hamster> hamsters, int id)
         {
             await _httpClient.PostAsJsonAsync("/api/matches/registermatch", new { hamsters, id } );
+        }
+
+        public async Task<IEnumerable<Hamster>> GetBottomFiveCompetitors()
+        {
+            var list = await _httpClient.GetFromJsonAsync<IEnumerable<Hamster>>("/api/hamsters/bottomfive");
+            return list;
         }
     }
 }

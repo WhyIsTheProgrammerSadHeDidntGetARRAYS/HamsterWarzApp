@@ -17,21 +17,20 @@ namespace HamsterWarz.API.Controllers
             _service = service;
         }
 
-        [Route("getall")]
         [HttpGet]
         public async Task<IEnumerable<Hamster>> GetAll()
         {
             return await _service.GetHamstersAsync();
         }
         
-        [Route("get/{id}")]
+        [Route("{id}")]
         [HttpGet]
         public async Task<Hamster> GetById(int id)
         {
             return await _service.GetHamsterById(id);
         }
 
-        [Route("getcompetitors")]
+        [Route("random")]
         [HttpGet]
         public async Task<IActionResult> GetHamsterCompetitors()
         {

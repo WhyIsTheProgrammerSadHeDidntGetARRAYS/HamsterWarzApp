@@ -18,6 +18,24 @@ namespace HamsterWarz.API.Data.Services
         {
             _context = context;
         }
+
+        public async Task<IEnumerable<MatchData>> GetAllMatchesAsync()
+        {
+            var matchData = await _context.MatchesData.ToListAsync();
+            if(!matchData.Any())
+            {
+                return new List<MatchData>();
+            }
+            return matchData;
+        }
+
+        public async Task<MatchData> GetMatchById(int id)
+        {
+            var match = await _context.MatchesData.FirstOrDefaultAsync(x => x.Id == id);
+            return match;
+            
+        }
+
         public async Task RegisterMatchData(TransferObject obj)
         {
             var winnerId = 0;
@@ -43,5 +61,26 @@ namespace HamsterWarz.API.Data.Services
             
             await _context.SaveChangesAsync();
         }
+
+        /// <summary>
+        /// This method gets the id of a clicked hamster, and queries the database and selects all the hamsterobjects that the hamster in question has won against
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public dynamic GetSpecificHamsterMatchData(int id)
+        {
+            var list = (from md in _context.MatchesData
+                        join winner in _context.Hamsters on md.WinnerId equals winner.Id
+                        join losers in _context.Hamsters on md.LoserId equals losers.Id
+                        where winner.Id == id
+                        select new
+                        {
+                            losers
+                        
+                        });
+            
+            return list;
+        }
+
     }
 }

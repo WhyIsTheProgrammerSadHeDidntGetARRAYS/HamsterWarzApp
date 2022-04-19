@@ -41,6 +41,7 @@ var app = builder.Build();
 // Seeding the database
 AppDbInitializer.Initialize(app);
 
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {

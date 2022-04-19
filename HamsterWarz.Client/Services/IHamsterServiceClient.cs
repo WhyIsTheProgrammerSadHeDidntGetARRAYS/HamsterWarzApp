@@ -12,7 +12,8 @@ namespace HamsterWarz.Client.Services
         Task<IEnumerable<Hamster>> GetHamstersAsync();
         Task<IEnumerable<Hamster>> GetCompetitorsAsync();
         Task VoteHamster(IEnumerable<Hamster> hamster, int id);
-        Task<IEnumerable<Hamster>> GetTopCompetitors();
+        Task<IEnumerable<Hamster>> GetTopFiveCompetitors();
+        Task<IEnumerable<Hamster>> GetBottomFiveCompetitors();
         Task RegisterMatchData(IEnumerable<Hamster> hamster, int id);
     }
 }

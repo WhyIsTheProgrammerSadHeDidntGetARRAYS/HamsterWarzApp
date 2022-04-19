@@ -10,20 +10,24 @@
 }
 else
 {
+    <div class="row">
     @foreach (var hamster in Hamsters)
     {
-        <div class="container-fluid">
-        <div class="card text-white bg-dark mt-2" style="width: 18rem;">
-            <img class="card-img-top img-fluid" src="@hamster.ImageUrl" alt="Card image cap">
+        
+        <div class="card text-white bg-dark mt-2 mr-15" style="width: 18rem;">
+            <img class="card-img-top" src="@hamster.ImageUrl" alt="Card image cap">
             <div class="card-body">
                 <h5 class="card-title">@hamster.Name</h5>
             </div>
+            <div class="card-footer">
+                <button style="width:200px" class="btn btn-dark btn-lg" @onclick="() => MatchCompleted(Hamsters, hamster.Id)">Vote</button>
+            </div>
         </div>
         <br/>
-        <button style="width:200px" class="btn btn-dark btn-lg" @onclick="() => MatchCompleted(Hamsters, hamster.Id)">Vote</button>
-        </div>
+        @*<button style="width:200px" class="btn btn-dark btn-lg" @onclick="() => MatchCompleted(Hamsters, hamster.Id)">Vote</button>*@
+        
     }
-    <br />
+    </div>
 }
 
 @code {

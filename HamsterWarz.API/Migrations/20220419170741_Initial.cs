@@ -9,20 +9,6 @@ namespace HamsterWarz.API.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "GamesData",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    WinnerId = table.Column<int>(type: "int", nullable: false),
-                    LoserId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_GamesData", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Hamsters",
                 columns: table => new
                 {
@@ -42,15 +28,29 @@ namespace HamsterWarz.API.Migrations
                 {
                     table.PrimaryKey("PK_Hamsters", x => x.Id);
                 });
+
+            migrationBuilder.CreateTable(
+                name: "MatchesData",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    WinnerId = table.Column<int>(type: "int", nullable: true),
+                    LoserId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MatchesData", x => x.Id);
+                });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "GamesData");
+                name: "Hamsters");
 
             migrationBuilder.DropTable(
-                name: "Hamsters");
+                name: "MatchesData");
         }
     }
 }

@@ -2,7 +2,7 @@
 @inject IHamsterServiceClient _service;
 
 
-@if(Hamsters == null)
+@if(TopHamsters == null && BottomHamsters == null)
 {
     <h4>...Loading</h4>
 }
@@ -10,7 +10,15 @@ else
 {
     <h1>Top five competitors!</h1>
     <MudGrid Spacing=3 Justify="Justify.SpaceAround" Class="mt-6 mb-6">
-    @foreach (var hamster in Hamsters)
+    @foreach (var hamster in TopHamsters)
+    {
+        <HamsterCard ImageUrl=@hamster.ImageUrl Name=@hamster.Name Wins=@hamster.Wins Defeats=@hamster.Defeats></HamsterCard>
+    }
+    </MudGrid>
+
+    <h1>Bottom five competitors!</h1>
+    <MudGrid Spacing=3 Justify="Justify.SpaceAround" Class="mt-6 mb-6">
+    @foreach (var hamster in BottomHamsters)
     {
         <HamsterCard ImageUrl=@hamster.ImageUrl Name=@hamster.Name Wins=@hamster.Wins Defeats=@hamster.Defeats></HamsterCard>
     }
@@ -19,10 +27,12 @@ else
 }
 
 @code {
-    private IEnumerable<Hamster> Hamsters;
-    
+    private IEnumerable<Hamster> TopHamsters;
+    private IEnumerable<Hamster> BottomHamsters;
+
     protected override async Task OnInitializedAsync()
     {
-        Hamsters = await _service.GetTopCompetitors();
+        TopHamsters = await _service.GetTopFiveCompetitors();
+        BottomHamsters = await _service.GetBottomFiveCompetitors();
     }
 }

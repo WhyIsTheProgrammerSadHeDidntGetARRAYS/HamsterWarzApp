@@ -18,5 +18,8 @@ namespace HamsterWarz.Entities.Models
         public int TotalGames { get; set; }
         public int Wins { get; set; } 
         public int Defeats { get; set; } 
+
+        //public List<MatchData>? MatchesData { get; set; }
+        
     }
 }
