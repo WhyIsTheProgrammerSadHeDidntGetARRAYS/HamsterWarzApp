@@ -15,6 +15,6 @@ namespace HamsterWarz.API.Data.Interfaces
         Task<MatchData> GetMatchById(int id);
         Task RegisterMatchData(TransferObject obj);
         Task<IEnumerable<Hamster>> GetSpecificHamsterMatchData(int id);
-        Task<IEnumerable<TransfObjMatchWinrz>> GetAllHamsterMatches();
+        Task<IEnumerable<MatchResultDTO>> GetAllHamsterMatches();
     }
 }

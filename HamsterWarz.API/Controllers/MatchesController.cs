@@ -19,7 +19,7 @@ namespace HamsterWarz.API.Controllers
         }
         //Getting all matchdata
         [HttpGet]
-        public async Task<IEnumerable<TransfObjMatchWinrz>> GetAll()
+        public async Task<IEnumerable<MatchResultDTO>> GetAll()
         {
             return await _service.GetAllHamsterMatches();
         }

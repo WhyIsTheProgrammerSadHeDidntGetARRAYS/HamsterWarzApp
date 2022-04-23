@@ -59,9 +59,9 @@ namespace HamsterWarz.Client.Services
             return test!;
         }
 
-        public async Task<IEnumerable<TransfObjMatchWinrz>> GetAllRegisteredMatches()
+        public async Task<IEnumerable<MatchResultDTO>> GetAllRegisteredMatches()
         {
-            var test = await _httpClient.GetFromJsonAsync<IEnumerable<TransfObjMatchWinrz>>("/api/matches");
+            var test = await _httpClient.GetFromJsonAsync<IEnumerable<MatchResultDTO>>("/api/matches");
             return test!;
 
         }

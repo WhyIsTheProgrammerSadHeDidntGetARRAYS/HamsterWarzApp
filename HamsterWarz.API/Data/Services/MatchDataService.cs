@@ -79,12 +79,12 @@ namespace HamsterWarz.API.Data.Services
             return list;
         }
 
-        public async Task<IEnumerable<TransfObjMatchWinrz>> GetAllHamsterMatches()
+        public async Task<IEnumerable<MatchResultDTO>> GetAllHamsterMatches()
         {
             var list = await (from md in _context.MatchesData
                               join winner in _context.Hamsters on md.WinnerId equals winner.Id
                               join loser in _context.Hamsters on md.LoserId equals loser.Id
-                              select new TransfObjMatchWinrz
+                              select new MatchResultDTO
                               {
                                   MatchId = md.Id,
                                   WinningHamster = winner,

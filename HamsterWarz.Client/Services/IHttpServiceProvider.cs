@@ -17,6 +17,6 @@ namespace HamsterWarz.Client.Services
         Task<IEnumerable<Hamster>> GetBottomFiveCompetitors();
         Task RegisterMatchData(IEnumerable<Hamster> hamster, int id);
         Task<IEnumerable<Hamster>> GetHamsterMatchData(int id);
-        Task<IEnumerable<TransfObjMatchWinrz>> GetAllRegisteredMatches();
+        Task<IEnumerable<MatchResultDTO>> GetAllRegisteredMatches();
     }
 }

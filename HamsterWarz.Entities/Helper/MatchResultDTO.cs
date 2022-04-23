@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace HamsterWarz.Entities.Helper
 {
-    public class TransfObjMatchWinrz
+    public class MatchResultDTO
     {
         public int MatchId { get; set; }
         public Hamster? WinningHamster { get; set; }
