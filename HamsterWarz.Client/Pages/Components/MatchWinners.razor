@@ -1,0 +1,45 @@
+﻿@inject IHttpServiceProvider service
+@page "/matchwinners/{id:int}"
+
+
+@if(LosingHamsters == null)
+{
+    <h4>...Loading</h4>
+}
+else
+{
+    <table class="table table-bg-dark">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Wins</th>
+            <th>Losses</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            @foreach (var item in LosingHamsters)
+            {
+                <td>@item.Name</td>
+                <td>@item.Wins</td>
+                <td>@item.Defeats</td>
+            }
+
+        </tr>
+    </tbody>
+</table>
+}
+
+
+@code {
+
+    private IEnumerable<Hamster>? LosingHamsters { get; set; }
+
+    [Parameter]
+    public int Id { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        LosingHamsters = await service.GetHamsterMatchData(Id);
+    }
+}

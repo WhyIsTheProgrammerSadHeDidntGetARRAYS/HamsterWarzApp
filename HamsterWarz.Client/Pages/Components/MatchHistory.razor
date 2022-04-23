@@ -1,0 +1,41 @@
+﻿@inject IHttpServiceProvider httpService;
+@page "/history"
+
+@if (AllRegisteredHamsterMatches == null)
+{
+    <h4>...Loading</h4>
+}
+else
+{
+    <table class="table table-dark table-striped">
+        <thead>
+            <tr>
+                <th>Winner</th>
+                <th>Loser</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (var hamster in AllRegisteredHamsterMatches)
+            {
+                <tr>
+                    <td>@hamster.WinningHamster.Name</td>
+                    <td>@hamster.LosingHamster.Name</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+
+@code {
+    private Hamster? Hamster { get; set; } 
+    private IEnumerable<MatchData>? AllMatches { get; set; }
+    private IEnumerable<Hamster>? AllHamsterMatches { get; set; }
+    private IEnumerable<TransfObjMatchWinrz> AllRegisteredHamsterMatches { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        AllRegisteredHamsterMatches = await httpService.GetAllRegisteredMatches();
+    }
+}

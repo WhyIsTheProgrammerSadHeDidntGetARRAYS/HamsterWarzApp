@@ -1,0 +1,50 @@
+﻿@page "/battle"
+@inject IHttpServiceProvider service;
+
+
+@if (Hamsters == null)
+{
+    <MudProgressCircular Color="Color.Primary" Style="height:70px;width:70px;" Indeterminate="true" />
+}
+else
+{
+    <div class="container">
+        <h1>Vote for the cutest hamster</h1>
+        <div class="row justify-content-center">
+            @foreach (var hamster in Hamsters)
+            {
+                <HamsterCard Hamster="@hamster">
+                    <ChildContent>
+                        <button style="width:200px" class="btn btn-outline-dark btn-lg" @onclick="() => MatchCompleted(Hamsters, hamster.Id)">Vote</button>
+                    </ChildContent>
+                </HamsterCard>
+                @*<div class="col">
+                    <div class="card rounded">
+                        <img class="card-img-top img-fluid" src="@hamster.ImageUrl" />
+                    </div>
+                    <button style="width:200px" class="btn btn-outline-primary btn-lg" @onclick="() => MatchCompleted(Hamsters, hamster.Id)">Vote</button>
+                </div>*@
+            }
+        </div>
+    </div>
+}
+
+@code {
+
+    private IEnumerable<Hamster>? Hamsters { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadNextBattleImages();
+    }
+    private async Task LoadNextBattleImages()
+    {
+        Hamsters = await service.GetRandomCompetitors();
+    }
+    private async Task MatchCompleted(IEnumerable<Hamster> hamsters, int winnerId)
+    {
+        await service.VoteHamster(hamsters, winnerId);
+        await service.RegisterMatchData(hamsters, winnerId);
+        await LoadNextBattleImages();
+    }
+}

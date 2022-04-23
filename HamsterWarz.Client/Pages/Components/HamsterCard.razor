@@ -1,0 +1,65 @@
+﻿@inject IHttpServiceProvider service
+
+
+
+<div class="col col-sm-4 col-md-4 mt-4 mb-4">
+    <div class="card rounded">
+        <img class="card-img-top img-fluid" src="@Hamster.ImageUrl" />
+        @ChildContent
+    </div>
+    
+</div>
+
+
+@*<MudCard Style="width: 200px">
+    <MudCardMedia Image="@ImageUrl" Height="200"/>
+    <MudCardContent>
+    <MudText Typo="Typo.h5">@Name</MudText>
+    <MudText Typo="Typo.body2"><b>Wins:</b> @Wins</MudText>
+    <MudText Typo="Typo.body2"><b>Defeats:</b> @Defeats</MudText>
+    <b>Rating:</b><MudRating Disabled="true" SelectedValue="@Likes" />
+    </MudCardContent>
+    <MudCardActions>
+    <MudButton Variant="Variant.Text" Color="Color.Primary">@ButtonText</MudButton>
+    </MudCardActions>
+    </MudCard>*@
+    
+    
+    @*<div class="col-lg-3 col-sm-5 col-12">
+    <div class="card mt-5 mb-5 rounded">
+    <img src="@Hamster.ImageUrl" alt="Card image cap" width="100%" height="200px">
+    <div class="card-block">
+    <h4>@Hamster.Name</h4>
+    <br>
+    <p><b>Wins:</b> @Hamster.Wins</p>
+    <p><b>Defeats:</b> @Hamster.Defeats</p>
+    @ChildContent
+    </div>
+    </div>
+    </div>*@
+
+@code {
+
+    [Parameter]
+    public Hamster Hamster { get; set; }
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+    //[Parameter]
+    //public string ImageUrl { get; set; }
+    //[Parameter]
+    //public string Name { get; set; }
+    //[Parameter]
+    //public int Wins { get; set; }
+    //[Parameter]
+    //public int Defeats { get; set; }
+    //[Parameter]
+    //public string ButtonText { get; set; } = "";
+    //private IEnumerable<Hamster> LosingHamsters { get; set; }
+
+    //private async void LoadHamsterStatistics(int id)
+    //{
+    //    //TODO: fixa så att när man klickar på en hamster i galleriet så ska ett boostrap table visas med matchhistorik på hamstrar denne besegrat
+    //    LosingHamsters = await service.GetHamsterMatchData(id);
+    //}
+
+}

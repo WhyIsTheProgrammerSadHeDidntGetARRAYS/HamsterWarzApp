@@ -1,4 +1,5 @@
 ﻿using HamsterWarz.API.Helper;
+using HamsterWarz.Entities.Helper;
 using HamsterWarz.Entities.Models;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,7 @@ namespace HamsterWarz.API.Data.Interfaces
         Task<IEnumerable<MatchData>> GetAllMatchesAsync();
         Task<MatchData> GetMatchById(int id);
         Task RegisterMatchData(TransferObject obj);
-        dynamic GetSpecificHamsterMatchData(int id);
+        Task<IEnumerable<Hamster>> GetSpecificHamsterMatchData(int id);
+        Task<IEnumerable<TransfObjMatchWinrz>> GetAllHamsterMatches();
     }
 }

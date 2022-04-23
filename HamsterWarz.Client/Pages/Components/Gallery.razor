@@ -1,0 +1,54 @@
+﻿@using HamsterWarz.Client.Services
+@using HamsterWarz.Entities.Models
+@inject IHttpServiceProvider service
+@page "/gallery"
+
+
+@if (Hamsters == null)
+{
+    @*<MudProgressCircular Color="Color.Primary" Style="height:70px;width:70px;" Indeterminate="true" />*@
+    <h4>...Loading</h4>
+}
+else
+{
+    <div class="container">
+        <div class="row justify-content-center">
+            @foreach (var item in Hamsters)
+            {
+                <HamsterCard Hamster="@item">
+                    <ChildContent>
+                        <h5>Name: @item.Name</h5>
+                        <h5>Interests: @item.Loves</h5>
+                        <button class="btn btn-outline-dark">Match History</button>
+                    </ChildContent>
+
+                </HamsterCard>
+            }
+        </div>
+    </div>
+}
+
+@code {
+    private IEnumerable<Hamster> Hamsters { get; set; }
+    private IEnumerable<Hamster> LosingHamsters { get; set; }
+    bool showMatchData { get; set; } = false;
+
+    private void handleShowMatchData()
+    {
+        showMatchData = !showMatchData;
+
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        /*await Task.Delay(1000);*/ //TODO: TEST För att se hur mudblazor loading-component ser ut med lite delay
+        Hamsters = await service.GetAllHamstersAsync();
+    }
+    private async void LoadHamsterStatistics(int id)
+    {
+        //TODO: fixa så att när man klickar på en hamster i galleriet så ska ett boostrap table visas med matchhistorik på hamstrar denne besegrat
+        LosingHamsters = await service.GetHamsterMatchData(id);
+    }
+
+
+}

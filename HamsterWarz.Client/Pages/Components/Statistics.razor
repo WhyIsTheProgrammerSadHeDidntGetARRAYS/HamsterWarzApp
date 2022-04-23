@@ -1,0 +1,88 @@
+﻿@page "/statistics"
+@inject IHttpServiceProvider _service;
+
+
+@if (TopHamsters == null && BottomHamsters == null)
+{
+    <h4>...Loading</h4>
+}
+else
+{
+    <div class="container">
+        <div class="row">
+            <h1>Top five competitors</h1>
+            @foreach (var hamster in TopHamsters)
+            {
+                <HamsterCard Hamster="@hamster">
+                    <ChildContent>
+                        <h4>@hamster.Name</h4>
+                        <br>
+                        <p><b>Age:</b> @hamster.Age</p>
+                        <p><b>Wins:</b> @hamster.Wins</p>
+                        <p><b>Defeats:</b> @hamster.Defeats</p>
+                    </ChildContent>
+                </HamsterCard>
+                @*<div class="col-lg-2 col-sm-5 col-12">
+                    <div class="card mt-5 mb-5 rounded">
+                        <img src="@hamster.ImageUrl" alt="Card image cap" width="100%" height="200px">
+                        <div class="card-block">
+                            <h4>@hamster.Name</h4>
+                            <br>
+                            <p><b>Age:</b> @hamster.Age</p>
+                            <p><b>Wins:</b> @hamster.Wins</p>
+                            <p><b>Defeats:</b> @hamster.Defeats</p>
+
+                        </div>
+                    </div>
+                </div>*@
+                @*<HamsterCard ImageUrl=@hamster.ImageUrl Name=@hamster.Name Wins=@hamster.Wins Defeats=@hamster.Defeats></HamsterCard>*@
+            }
+        </div>
+    </div>
+
+
+    <div class="container">
+        <div class="row">
+            <h1>Bottom five competitors</h1>
+            @foreach (var hamster in BottomHamsters)
+            {
+                <HamsterCard Hamster="@hamster">
+                    <ChildContent>
+                        <h4>@hamster.Name</h4>
+                        <br>
+                        <p><b>Age:</b> @hamster.Age</p>
+                        <p><b>Wins:</b> @hamster.Wins</p>
+                        <p><b>Defeats:</b> @hamster.Defeats</p>
+                    </ChildContent>
+                </HamsterCard>
+
+                @*<div class="col-lg-2 col-sm-5 col-8">
+                    <div class="card mt-5 mb-5 rounded">
+                        <img src="@hamster.ImageUrl" alt="Card image cap" width="100%" height="200px">
+                        <div>
+                            <h4>@hamster.Name</h4>
+                            <br>
+                            <p><b>Age:</b> @hamster.Age</p>
+                            <p><b>Wins:</b> @hamster.Wins</p>
+                            <p><b>Defeats:</b> @hamster.Defeats</p>
+
+                        </div>
+                    </div>
+                </div>*@
+                @*<HamsterCard ImageUrl=@hamster.ImageUrl Name=@hamster.Name Wins=@hamster.Wins Defeats=@hamster.Defeats></HamsterCard>*@
+            }
+        </div>
+    </div>
+
+}
+
+@code {
+    private IEnumerable<Hamster> TopHamsters;
+    private IEnumerable<Hamster> BottomHamsters;
+
+    protected override async Task OnInitializedAsync()
+    {
+        TopHamsters = await _service.GetTopFiveCompetitors();
+        BottomHamsters = await _service.GetBottomFiveCompetitors();
+    }
+}

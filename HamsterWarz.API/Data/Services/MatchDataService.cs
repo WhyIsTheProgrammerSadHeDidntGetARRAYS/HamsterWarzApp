@@ -1,5 +1,6 @@
 ﻿using HamsterWarz.API.Data.Interfaces;
 using HamsterWarz.API.Helper;
+using HamsterWarz.Entities.Helper;
 using HamsterWarz.Entities.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -32,7 +33,7 @@ namespace HamsterWarz.API.Data.Services
         public async Task<MatchData> GetMatchById(int id)
         {
             var match = await _context.MatchesData.FirstOrDefaultAsync(x => x.Id == id);
-            return match;
+            return match!;
             
         }
 
@@ -67,20 +68,30 @@ namespace HamsterWarz.API.Data.Services
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public dynamic GetSpecificHamsterMatchData(int id)
+        public async Task<IEnumerable<Hamster>> GetSpecificHamsterMatchData(int id)
         {
-            var list = (from md in _context.MatchesData
+            var list = await (from md in _context.MatchesData
                         join winner in _context.Hamsters on md.WinnerId equals winner.Id
                         join losers in _context.Hamsters on md.LoserId equals losers.Id
                         where winner.Id == id
-                        select new
-                        {
-                            losers
-                        
-                        });
+                        select losers).ToListAsync();
             
             return list;
         }
 
+        public async Task<IEnumerable<TransfObjMatchWinrz>> GetAllHamsterMatches()
+        {
+            var list = await (from md in _context.MatchesData
+                              join winner in _context.Hamsters on md.WinnerId equals winner.Id
+                              join loser in _context.Hamsters on md.LoserId equals loser.Id
+                              select new TransfObjMatchWinrz
+                              {
+                                  MatchId = md.Id,
+                                  WinningHamster = winner,
+                                  LosingHamster = loser,
+
+                              }).ToListAsync();
+            return list!;
+        }
     }
 }
