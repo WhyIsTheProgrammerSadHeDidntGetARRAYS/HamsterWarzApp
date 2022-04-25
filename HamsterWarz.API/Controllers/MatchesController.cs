@@ -35,7 +35,7 @@ namespace HamsterWarz.API.Controllers
         //posting match data
         [Route("registermatch")]
         [HttpPost]
-        public async Task<IActionResult> PostMatchData(TransferObject obj)
+        public async Task<IActionResult> PostMatchData(MatchWinnerDTO obj)
         {
             if (!ModelState.IsValid)
             {

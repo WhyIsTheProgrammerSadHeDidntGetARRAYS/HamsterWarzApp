@@ -13,7 +13,7 @@ namespace HamsterWarz.API.Data.Interfaces
     {
         Task<IEnumerable<MatchData>> GetAllMatchesAsync();
         Task<MatchData> GetMatchById(int id);
-        Task RegisterMatchData(TransferObject obj);
+        Task RegisterMatchData(MatchWinnerDTO obj);
         Task<IEnumerable<Hamster>> GetSpecificHamsterMatchData(int id);
         Task<IEnumerable<MatchResultDTO>> GetAllHamsterMatches();
     }

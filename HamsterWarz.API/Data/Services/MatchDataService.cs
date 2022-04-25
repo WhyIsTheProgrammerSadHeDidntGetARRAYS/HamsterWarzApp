@@ -37,7 +37,7 @@ namespace HamsterWarz.API.Data.Services
             
         }
 
-        public async Task RegisterMatchData(TransferObject obj)
+        public async Task RegisterMatchData(MatchWinnerDTO obj)
         {
             var winnerId = 0;
             var loserId = 0;

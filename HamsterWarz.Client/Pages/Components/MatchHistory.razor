@@ -7,32 +7,47 @@
 }
 else
 {
-    <table class="table table-dark table-striped">
+    <RadzenGrid AllowPaging="true"
+            AllowFiltering="true"
+            AllowSorting="true"
+            FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
+            PageSize="10"
+            Data="@AllRegisteredHamsterMatches"
+            TItem="@MatchResultDTO"
+            ColumnWidth="300px">
+
+        <Columns>
+            <RadzenGridColumn TItem="@MatchResultDTO" Property="MatchId" Title="Match Id"></RadzenGridColumn>
+            <RadzenGridColumn TItem="@MatchResultDTO" Property="WinningHamster.Name" Title="Winners"></RadzenGridColumn>
+            <RadzenGridColumn TItem="@MatchResultDTO" Property="LosingHamster.Name" Title="Losers"></RadzenGridColumn>
+        </Columns>
+
+    </RadzenGrid>
+    @*<table class="table table-dark table-striped">
         <thead>
-            <tr>
-                <th>Winner</th>
-                <th>Loser</th>
-            </tr>
+        <tr>
+        <th>Match Id</th>
+        <th>Winner</th>
+        <th>Loser</th>
+        </tr>
         </thead>
         <tbody>
 
-            @foreach (var hamster in AllRegisteredHamsterMatches)
-            {
-                <tr>
-                    <td>@hamster.WinningHamster.Name</td>
-                    <td>@hamster.LosingHamster.Name</td>
-                </tr>
-            }
+        @foreach (var hamster in AllRegisteredHamsterMatches)
+        {
+        <tr>
+        <td>@hamster.MatchId</td>
+        <td>@hamster.WinningHamster.Name</td>
+        <td>@hamster.LosingHamster.Name</td>
+        </tr>
+        }
         </tbody>
-    </table>
+        </table>*@
 }
 
 
 @code {
-    private Hamster? Hamster { get; set; } 
-    private IEnumerable<MatchData>? AllMatches { get; set; }
-    private IEnumerable<Hamster>? AllHamsterMatches { get; set; }
-    private IEnumerable<MatchResultDTO> AllRegisteredHamsterMatches { get; set; }
+    private IEnumerable<MatchResultDTO>? AllRegisteredHamsterMatches { get; set; }
 
     protected override async Task OnInitializedAsync()
     {

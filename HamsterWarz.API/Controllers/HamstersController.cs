@@ -48,7 +48,7 @@ namespace HamsterWarz.API.Controllers
         /// <returns>status code</returns>
         [Route("vote")]
         [HttpPost]
-        public async Task<IActionResult> VoteForHamster(TransferObject obj)
+        public async Task<IActionResult> VoteForHamster(MatchWinnerDTO obj)
         {
             if(obj == null)
             {

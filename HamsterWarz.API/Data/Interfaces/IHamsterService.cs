@@ -15,6 +15,6 @@ namespace HamsterWarz.API.Data.Interfaces
         Task<IEnumerable<Hamster>>? TopFiveWinners();
         Task<IEnumerable<Hamster>>? TopFiveLosers();
         Task<IEnumerable<Hamster>> GetHamsterCompetitorsAsync();
-        Task VoteHamster(TransferObject obj);
+        Task VoteHamster(MatchWinnerDTO obj);
     }
 }

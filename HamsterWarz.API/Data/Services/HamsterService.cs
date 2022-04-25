@@ -35,7 +35,7 @@ namespace HamsterWarz.API.Data.Services
             return await _context.Hamsters.OrderBy(x => Guid.NewGuid()).Skip(1).Take(2).ToListAsync();
         }
 
-        public async Task VoteHamster(TransferObject obj)
+        public async Task VoteHamster(MatchWinnerDTO obj)
         {
             int winnerId = obj.Id;
             var hamsterList = obj.Hamsters;

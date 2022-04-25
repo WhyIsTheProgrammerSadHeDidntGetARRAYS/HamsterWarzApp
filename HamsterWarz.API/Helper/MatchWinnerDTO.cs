@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace HamsterWarz.API.Helper
 {
-    public class TransferObject
+    public class MatchWinnerDTO
     {
         public int Id { get; set; }
         public IEnumerable<Hamster> Hamsters { get; set; }
