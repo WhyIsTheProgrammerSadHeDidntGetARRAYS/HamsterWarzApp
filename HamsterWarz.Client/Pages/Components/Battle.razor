@@ -15,15 +15,13 @@ else
             {
                 <HamsterCard Hamster="@hamster">
                     <ChildContent>
-                        <button style="width:200px" class="btn btn-outline-dark btn-lg" @onclick="() => MatchCompleted(Hamsters, hamster.Id)">Vote</button>
+                        <br>
+                        <div class="d-flex justify-content-center ">
+                            <button style="width:200px" class="btn btn-outline-dark btn-lg" @onclick="() => MatchCompleted(Hamsters, hamster.Id)">Vote</button>
+                        </div>
+                        @*<button style="width:200px" class="btn btn-outline-dark btn-lg" @onclick="() => MatchCompleted(Hamsters, hamster.Id)">Vote</button>*@
                     </ChildContent>
                 </HamsterCard>
-                @*<div class="col">
-                    <div class="card rounded">
-                        <img class="card-img-top img-fluid" src="@hamster.ImageUrl" />
-                    </div>
-                    <button style="width:200px" class="btn btn-outline-primary btn-lg" @onclick="() => MatchCompleted(Hamsters, hamster.Id)">Vote</button>
-                </div>*@
             }
         </div>
     </div>

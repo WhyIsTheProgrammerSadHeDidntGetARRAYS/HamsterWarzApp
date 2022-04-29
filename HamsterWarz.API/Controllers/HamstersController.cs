@@ -1,5 +1,8 @@
-﻿using HamsterWarz.API.Data.Interfaces;
-using HamsterWarz.API.Helper;
+﻿//using HamsterWarz.API.Data.Interfaces;
+//using HamsterWarz.API.Helper;
+using DataAccess.Data.Interfaces;
+using DataAccess.Data.Services;
+using HamsterWarz.Entities.Helper;
 using HamsterWarz.Entities.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -17,17 +20,36 @@ namespace HamsterWarz.API.Controllers
             _service = service;
         }
 
+        //[HttpGet]
+        //public async Task<IEnumerable<Hamster>> GetAll()
+        //{
+        //    return await _service.GetHamstersAsync();
+        //}
+
         [HttpGet]
-        public async Task<IEnumerable<Hamster>> GetAll()
+        public async Task<IActionResult> GetAll()
         {
-            return await _service.GetHamstersAsync();
+            var list = await _service.GetHamstersAsync();
+            
+            if(!list.Any())
+            {
+                return NotFound();
+            }
+            return Ok(list);
         }
-        
+
         [Route("{id}")]
         [HttpGet]
-        public async Task<Hamster> GetById(int id)
+        public async Task<IActionResult> GetById(int id)
         {
-            return await _service.GetHamsterById(id);
+            var hamster = await _service.GetHamsterById(id)!;
+            
+            if(hamster == null)
+            {
+                return NotFound();
+            }
+            
+            return Ok(hamster);
         }
 
         [Route("random")]
@@ -35,11 +57,12 @@ namespace HamsterWarz.API.Controllers
         public async Task<IActionResult> GetHamsterCompetitors()
         {
             var list = await _service.GetHamsterCompetitorsAsync();
-            if (list.Any())
+            
+            if (!list.Any())
             {
-                return Ok(list);
+                return BadRequest("No hamsters found");
             }
-            return BadRequest("No hamsters found");
+            return Ok(list);
         }
         /// <summary>
         /// 
@@ -48,7 +71,7 @@ namespace HamsterWarz.API.Controllers
         /// <returns>status code</returns>
         [Route("vote")]
         [HttpPost]
-        public async Task<IActionResult> VoteForHamster(MatchWinnerDTO obj)
+        public async Task<IActionResult> VoteForHamster(MatchWinnersDTO obj)
         {
             if(obj == null)
             {
@@ -71,9 +94,9 @@ namespace HamsterWarz.API.Controllers
         /// <returns>IEnumerable of top 5 rated hamsters</returns>
         [HttpGet]
         [Route("topfive")]
-        public async Task<IActionResult> GetTopFive()
+        public async Task<IActionResult> GetTopFiveHamsterCompetitors()
         {
-            var topFive = await _service.TopFiveWinners();
+            var topFive = await _service.TopFiveWinners()!;
             
             if (!topFive.Any())
             {
@@ -82,16 +105,15 @@ namespace HamsterWarz.API.Controllers
 
             return Ok(topFive);
         }
-        //TODO: Fixa så att man på clientsidan kan få fram 5 hamstrarna som förlorat mest, detta ska visas på statisticspagen
         /// <summary>
         /// 
         /// </summary>
         /// <returns>IEnumerable of lowest 5 rated hamsters</returns>
         [HttpGet]
         [Route("bottomfive")]
-        public async Task<IActionResult> GetBottomFive()
+        public async Task<IActionResult> GetBottomFiveHamsterCompetitors()
         {
-            var botFive = await _service.TopFiveLosers();
+            var botFive = await _service.TopFiveLosers()!;
 
             if (!botFive.Any())
             {
@@ -99,6 +121,24 @@ namespace HamsterWarz.API.Controllers
             }
 
             return Ok(botFive);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddHamster([FromBody] Hamster hamster)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+            try
+            {
+                await _service.AddHamster(hamster);
+                return Ok(hamster);
+            }
+            catch
+            {
+                throw;
+            }
         }
     }
 }

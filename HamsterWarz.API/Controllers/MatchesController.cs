@@ -1,5 +1,7 @@
-﻿using HamsterWarz.API.Data.Interfaces;
-using HamsterWarz.API.Helper;
+﻿//using HamsterWarz.API.Data.Interfaces;
+using DataAccess.Data.Interfaces;
+using DataAccess.Data.Services;
+//using HamsterWarz.API.Helper;
 using HamsterWarz.Entities.Helper;
 using HamsterWarz.Entities.Models;
 using Microsoft.AspNetCore.Http;
@@ -19,7 +21,7 @@ namespace HamsterWarz.API.Controllers
         }
         //Getting all matchdata
         [HttpGet]
-        public async Task<IEnumerable<MatchResultDTO>> GetAll()
+        public async Task<IEnumerable<MatchResultDTO>> GetAllMatches()
         {
             return await _service.GetAllHamsterMatches();
         }
@@ -35,7 +37,7 @@ namespace HamsterWarz.API.Controllers
         //posting match data
         [Route("registermatch")]
         [HttpPost]
-        public async Task<IActionResult> PostMatchData(MatchWinnerDTO obj)
+        public async Task<IActionResult> PostMatchData(MatchWinnersDTO obj)
         {
             if (!ModelState.IsValid)
             {
@@ -51,6 +53,18 @@ namespace HamsterWarz.API.Controllers
             }
             return Ok(obj.Hamsters);
         }
+        [HttpDelete]
+        [Route("delete/{id}")]
+        public async Task<IActionResult> RemoveMatchData(int id)
+        {
+            if(id < 1)
+            {
+                return BadRequest();
+                
+            }
+            await _service.DeleteMatch(id);
+            return Ok();
+        }
 
         [Route("statistics/{id}")]
         [HttpGet]
@@ -64,13 +78,5 @@ namespace HamsterWarz.API.Controllers
             return Ok(temp);
         }
 
-        //[Route("statistics/{id}")]
-        //[HttpGet]
-        //public async Task<IActionResult> GetAllHamsterMatchData()
-        //{
-            
-        //    var temp = await 
-        //    return Ok(temp);
-        //}
     }
 }

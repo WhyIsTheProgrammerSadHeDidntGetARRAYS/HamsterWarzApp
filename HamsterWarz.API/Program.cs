@@ -1,7 +1,11 @@
-using HamsterWarz.API.Data;
-using HamsterWarz.API.Data.Interfaces;
-using HamsterWarz.API.Data.Services;
+//using HamsterWarz.API.Data;
+//using HamsterWarz.API.Data.Interfaces;
+//using HamsterWarz.API.Data.Services;
 using Microsoft.EntityFrameworkCore;
+using DataAccess.Data.Interfaces;
+using DataAccess.Data.Services;
+using DataAccess;
+using DataAccess.Seed;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,10 +16,11 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 
 //Adding database connection
-builder.Services.AddDbContext<AppDbContext>(options =>
-{
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
-});
+//builder.Services.AddDbContext<AppDbContext>(options =>
+//{
+//    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+//});
+builder.Services.AddPersistence(builder.Configuration);
 
 //enabling cors for client side url
 builder.Services.AddCors(opt =>
@@ -26,20 +31,21 @@ builder.Services.AddCors(opt =>
             builder
             .AllowAnyHeader()
             .AllowAnyMethod()
-            .WithOrigins("https://localhost:7236",
-            "http://localhost:5236");
+            .AllowAnyOrigin();
+            //.WithOrigins("https://localhost:7236",
+            //"http://localhost:5236");
         });
 });
 
 
-builder.Services.AddScoped<IHamsterService, HamsterService>();
-builder.Services.AddScoped<IMatchDataService, MatchDataService>();
+//builder.Services.AddScoped<IHamsterService, HamsterService>();
+//builder.Services.AddScoped<IMatchDataService, MatchDataService>();
 
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 // Seeding the database
-AppDbInitializer.Initialize(app);
+DatabaseSeed.Seed(app);
 
 
 // Configure the HTTP request pipeline.

@@ -17,6 +17,11 @@ namespace HamsterWarz.Client.Services
         {
             _httpClient = httpClient;
         }
+        public async Task AddNewHamster(Hamster hamster)
+        {
+            var response = await _httpClient.PostAsJsonAsync("/api/hamsters", hamster);
+
+        }
 
         public async Task<IEnumerable<Hamster>> GetAllHamstersAsync()
         {
@@ -31,26 +36,40 @@ namespace HamsterWarz.Client.Services
             return content!;
 
         }
-        public async Task VoteHamster(IEnumerable<Hamster> hamsters, int id)
+        public async Task VoteHamster(IEnumerable<Hamster> hamsters, int winnerId)
         {
-            await _httpClient.PostAsJsonAsync("/api/hamsters/vote", new { hamsters, id });
-        }
-
-        public async Task<IEnumerable<Hamster>> GetTopFiveCompetitors()
-        {
-            var list = await _httpClient.GetFromJsonAsync<IEnumerable<Hamster>>("api/hamsters/topfive");
-            return list!;
+            await _httpClient.PostAsJsonAsync("/api/hamsters/vote", new { hamsters, winnerId });
         }
 
         public async Task RegisterMatchData(IEnumerable<Hamster> hamsters, int id)
         {
             await _httpClient.PostAsJsonAsync("/api/matches/registermatch", new { hamsters, id });
         }
+        public async Task<IEnumerable<Hamster>> GetTopFiveCompetitors()
+        {
+            var responseTask = await _httpClient.GetAsync("/api/hamsters/topfive");
+
+            if (responseTask.IsSuccessStatusCode)
+            {
+                var value = responseTask.Content.ReadFromJsonAsync<IEnumerable<Hamster>>().Result;
+                return value!;
+            }
+            return new List<Hamster>();
+        }
 
         public async Task<IEnumerable<Hamster>> GetBottomFiveCompetitors()
         {
-            var list = await _httpClient.GetFromJsonAsync<IEnumerable<Hamster>>("/api/hamsters/bottomfive");
-            return list!;
+            //TODO: Kika på om det är såhär jag vill göra, med statuscode check
+            var responseTask = await _httpClient.GetAsync("/api/hamsters/bottomfive");
+            
+            if (responseTask.IsSuccessStatusCode)
+            {
+                var value = responseTask.Content.ReadFromJsonAsync<IEnumerable<Hamster>>().Result;
+                return value!;
+            }
+            return new List<Hamster>();
+            //var list = await _httpClient.GetFromJsonAsync<IEnumerable<Hamster>>("/api/hamsters/bottomfive");
+            //return list!;
         }
 
         public async Task<IEnumerable<Hamster>> GetHamsterMatchData(int id)
@@ -65,5 +84,13 @@ namespace HamsterWarz.Client.Services
             return test!;
 
         }
+
+        public async Task DeleteMatchRow(int id)
+        {
+            //var url = "https://localhost:7026/api/matches/delete";
+            await _httpClient.DeleteAsync($"/api/matches/delete/{id}");
+        }
+
+        
     }
 }

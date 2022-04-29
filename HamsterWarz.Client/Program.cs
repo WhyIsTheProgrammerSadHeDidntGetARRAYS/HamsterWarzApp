@@ -1,3 +1,4 @@
+using BlazorStrap;
 using HamsterWarz.Client;
 using HamsterWarz.Client.Services;
 using Microsoft.AspNetCore.Components.Web;
@@ -10,6 +11,7 @@ builder.RootComponents.Add<HeadOutlet>("head::after");
 
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://localhost:7026/") });
 builder.Services.AddMudServices();
+builder.Services.AddBlazorStrap();
 builder.Services.AddScoped<IHttpServiceProvider, HttpServiceProvider>();
 
 await builder.Build().RunAsync();

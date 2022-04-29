@@ -10,6 +10,8 @@
 
 .logo1 {
     mix-blend-mode:multiply;
+    max-width:100%;
+    height:auto;
     
 }
 .card-img-top {
@@ -22,6 +24,7 @@
     top: 300px;
     padding-left:740px;
     color:black;
+    font-size:2vw;
 }
 .homepage-paragraph {
     position: relative;

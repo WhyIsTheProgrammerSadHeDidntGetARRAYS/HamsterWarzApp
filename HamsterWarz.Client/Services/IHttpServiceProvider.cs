@@ -10,13 +10,15 @@ namespace HamsterWarz.Client.Services
 {
     public interface IHttpServiceProvider
     {
+        Task AddNewHamster(Hamster hamster);
         Task<IEnumerable<Hamster>> GetAllHamstersAsync();
         Task<IEnumerable<Hamster>> GetRandomCompetitors();
-        Task VoteHamster(IEnumerable<Hamster> hamster, int id);
+        Task VoteHamster(IEnumerable<Hamster> hamsters, int winnerId);
         Task<IEnumerable<Hamster>> GetTopFiveCompetitors();
         Task<IEnumerable<Hamster>> GetBottomFiveCompetitors();
         Task RegisterMatchData(IEnumerable<Hamster> hamster, int id);
         Task<IEnumerable<Hamster>> GetHamsterMatchData(int id);
         Task<IEnumerable<MatchResultDTO>> GetAllRegisteredMatches();
+        Task DeleteMatchRow(int id);
     }
 }

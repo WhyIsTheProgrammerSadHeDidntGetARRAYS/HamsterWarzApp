@@ -6,42 +6,54 @@
 
 @if (Hamsters == null)
 {
-    @*<MudProgressCircular Color="Color.Primary" Style="height:70px;width:70px;" Indeterminate="true" />*@
     <h4>...Loading</h4>
 }
 else
 {
     <div class="container">
-        <div class="row justify-content-center">
+        <button class="btn btn-dark">Add new Hamster</button>
+        <div class="row ">
             @foreach (var item in Hamsters)
             {
                 <HamsterCard Hamster="@item">
                     <ChildContent>
-                        <h5>Name: @item.Name</h5>
-                        <h5>Interests: @item.Loves</h5>
-                        <button class="btn btn-outline-dark">Match History</button>
+                        <h5 class="card-title">@item.Name</h5>
+                        <h6><b>Interests:</b> @item.Loves</h6>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <a class="btn btn-sm btn-outline-dark" @onclick="() => LoadHamsterStatistics(item.Id)">Match History</a>
+                        </div>
                     </ChildContent>
-
                 </HamsterCard>
             }
         </div>
     </div>
+    
 }
+@*<BSCarousel HasControls="true" HasIndicators="true">  
+    <BSCarouselItem>
+        <svg class="bd-placeholder-img bd-placeholder-img-lg d-block w-100" width="800" height="400" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: First slide" preserveAspectRatio="xMidYMid slice" focusable="false">
+            <rect width="100%" height="100%" fill="#777"></rect><text x="50%" y="50%" fill="#555" dy=".3em">First slide</text>
+        </svg>
+    </BSCarouselItem>
+    <BSCarouselItem>
+        <svg class="bd-placeholder-img bd-placeholder-img-lg d-block w-100" width="800" height="400" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Second slide" preserveAspectRatio="xMidYMid slice" focusable="false">
+            <rect width="100%" height="100%" fill="#666"></rect><text x="50%" y="50%" fill="#444" dy=".3em">Second slide</text>
+        </svg>
+    </BSCarouselItem>
+    <BSCarouselItem>
+        <svg class="bd-placeholder-img bd-placeholder-img-lg d-block w-100" width="800" height="400" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Third slide" preserveAspectRatio="xMidYMid slice" focusable="false">
+            <rect width="100%" height="100%" fill="#555"></rect><text x="50%" y="50%" fill="#333" dy=".3em">Third slide</text>
+        </svg>
+    </BSCarouselItem>
+</BSCarousel>*@
 
 @code {
-    private IEnumerable<Hamster> Hamsters { get; set; }
-    private IEnumerable<Hamster> LosingHamsters { get; set; }
-    bool showMatchData { get; set; } = false;
-
-    private void handleShowMatchData()
-    {
-        showMatchData = !showMatchData;
-
-    }
+    private IEnumerable<Hamster>? Hamsters { get; set; }
+    private IEnumerable<Hamster>? LosingHamsters { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
-        /*await Task.Delay(1000);*/ //TODO: TEST För att se hur mudblazor loading-component ser ut med lite delay
+        /*await Task.Delay(1000);*/ //TEST För att se hur mudblazor loading-component ser ut med lite delay
         Hamsters = await service.GetAllHamstersAsync();
     }
     private async void LoadHamsterStatistics(int id)

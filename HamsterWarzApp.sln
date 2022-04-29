@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HamsterWarz.API", "HamsterW
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HamsterWarz.Entities", "HamsterWarz.Entities\HamsterWarz.Entities.csproj", "{AFB301E4-500C-44D8-9118-3BD377368CDB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccess", "DataAccess\DataAccess.csproj", "{8B293C15-7921-4B73-8E78-BF7972071F7E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{AFB301E4-500C-44D8-9118-3BD377368CDB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AFB301E4-500C-44D8-9118-3BD377368CDB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AFB301E4-500C-44D8-9118-3BD377368CDB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8B293C15-7921-4B73-8E78-BF7972071F7E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8B293C15-7921-4B73-8E78-BF7972071F7E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8B293C15-7921-4B73-8E78-BF7972071F7E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8B293C15-7921-4B73-8E78-BF7972071F7E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
