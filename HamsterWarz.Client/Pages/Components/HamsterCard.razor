@@ -1,33 +1,21 @@
-﻿@inject IHttpServiceProvider service
+﻿@inject IRequestService service
+
 <div class="col col-4 mt-4 mb-4">
     <div class="card rounded">
-        <img class="card-img-top img-fluid" src="@Hamster.ImageUrl" />
+        @*this tries to render the image path applied to the hamster, if no image was found, i render a static default image*@
+        <img class="card-img-top img-fluid" src="@Hamster.ImageUrl" onerror="this.onerror=null; this.src='/Content/Images/hamstahh.png'" />
         @ChildContent
     </div>
-    
 </div>
 
 
 
 @code {
 
-    //[Parameter]
-    //public string? CardClass { get; set; }
     [Parameter]
     public Hamster? Hamster { get; set; }
     [Parameter]
     public RenderFragment? ChildContent { get; set; }
-    //[Parameter]
-    //public string ImageUrl { get; set; }
-    //[Parameter]
-    //public string Name { get; set; }
-    //[Parameter]
-    //public int Wins { get; set; }
-    //[Parameter]
-    //public int Defeats { get; set; }
-    //[Parameter]
-    //public string ButtonText { get; set; } = "";
-    //private IEnumerable<Hamster> LosingHamsters { get; set; }
 
     //private async void LoadHamsterStatistics(int id)
     //{

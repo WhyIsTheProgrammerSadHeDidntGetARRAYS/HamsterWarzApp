@@ -1,5 +1,6 @@
 ﻿using HamsterWarz.Entities.Helper;
 using HamsterWarz.Entities.Models;
+using HamsterWarz.Entities.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace HamsterWarz.Client.Services
 {
-    public interface IHttpServiceProvider
+    public interface IRequestService
     {
-        Task AddNewHamster(Hamster hamster);
+        Task AddNewHamster(HamsterViewModel hamster);
         Task<IEnumerable<Hamster>> GetAllHamstersAsync();
         Task<IEnumerable<Hamster>> GetRandomCompetitors();
         Task VoteHamster(IEnumerable<Hamster> hamsters, int winnerId);

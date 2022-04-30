@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataAccess.Data.Interfaces
+namespace HamsterWarz.Entities.Interfaces
 {
     public interface IMatchDataService
     {

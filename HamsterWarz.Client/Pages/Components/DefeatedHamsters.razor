@@ -1,0 +1,33 @@
+﻿@inject IRequestService service;
+
+
+@if (AllDefeatedHamsters != null)
+{
+    <div class="container">
+        <ul>
+            @foreach (var hamster in AllDefeatedHamsters)
+            {
+                <li>@hamster.Name</li>
+            }
+
+        </ul>
+    </div>
+}
+else
+{
+    <p>No match data!</p>
+}
+
+
+@code {
+    [Parameter]
+    public int Id { get; set; }
+
+    public IEnumerable<Hamster>? AllDefeatedHamsters { get; set; }
+
+    protected async override Task OnInitializedAsync()
+    {
+        AllDefeatedHamsters = await service.GetHamsterMatchData(Id);
+        return;
+    }
+}

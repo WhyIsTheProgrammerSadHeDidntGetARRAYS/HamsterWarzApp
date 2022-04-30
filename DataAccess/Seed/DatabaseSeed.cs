@@ -85,6 +85,14 @@ namespace DataAccess.Seed
                             Age = 1,
                             Loves = "Sleeping",
                             FavoriteFood = "Carrots"
+                        },
+                        new Hamster
+                        {
+                            Name = "Göran",
+                            ImageUrl = "/Content/Images/hamster-35.jpg",
+                            Age = 1,
+                            Loves = "Liseberg",
+                            FavoriteFood = "Pasta"
                         }
                     });
                     context.SaveChanges();

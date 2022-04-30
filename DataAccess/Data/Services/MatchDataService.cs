@@ -1,6 +1,7 @@
-﻿using DataAccess.Data.Interfaces;
+﻿//using DataAccess.Data.Interfaces;
 using HamsterWarz.Entities.Helper;
 using HamsterWarz.Entities.Models;
+using HamsterWarz.Entities.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;

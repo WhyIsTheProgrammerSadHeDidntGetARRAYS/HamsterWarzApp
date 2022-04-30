@@ -12,6 +12,6 @@ builder.RootComponents.Add<HeadOutlet>("head::after");
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://localhost:7026/") });
 builder.Services.AddMudServices();
 builder.Services.AddBlazorStrap();
-builder.Services.AddScoped<IHttpServiceProvider, HttpServiceProvider>();
+builder.Services.AddScoped<IRequestService, RequestService>();
 
 await builder.Build().RunAsync();

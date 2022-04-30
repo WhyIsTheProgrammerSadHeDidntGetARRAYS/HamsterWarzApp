@@ -1,5 +1,5 @@
 ﻿@page "/battle"
-@inject IHttpServiceProvider service;
+@inject IRequestService service;
 
 
 @if (Hamsters == null)
@@ -9,8 +9,8 @@
 else
 {
     <div class="container">
-        <h1>Vote for the cutest hamster</h1>
         <div class="row justify-content-center">
+            <h1>Vote for the cutest hamster</h1>
             @foreach (var hamster in Hamsters)
             {
                 <HamsterCard Hamster="@hamster">

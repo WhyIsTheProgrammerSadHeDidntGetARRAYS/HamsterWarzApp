@@ -1,11 +1,9 @@
-﻿//using HamsterWarz.API.Data.Interfaces;
-//using HamsterWarz.API.Helper;
-using DataAccess.Data.Interfaces;
-using DataAccess.Data.Services;
-using HamsterWarz.Entities.Helper;
+﻿using HamsterWarz.Entities.Helper;
 using HamsterWarz.Entities.Models;
+using HamsterWarz.Entities.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using HamsterWarz.Entities.ViewModels;
 
 namespace HamsterWarz.API.Controllers
 {
@@ -19,12 +17,6 @@ namespace HamsterWarz.API.Controllers
         {
             _service = service;
         }
-
-        //[HttpGet]
-        //public async Task<IEnumerable<Hamster>> GetAll()
-        //{
-        //    return await _service.GetHamstersAsync();
-        //}
 
         [HttpGet]
         public async Task<IActionResult> GetAll()
@@ -124,7 +116,7 @@ namespace HamsterWarz.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddHamster([FromBody] Hamster hamster)
+        public async Task<IActionResult> AddHamster([FromBody] HamsterViewModel hamster)
         {
             if (!ModelState.IsValid)
             {

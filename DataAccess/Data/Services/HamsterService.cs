@@ -1,12 +1,14 @@
-﻿using DataAccess.Data.Interfaces;
+﻿//using DataAccess.Data.Interfaces;
 using HamsterWarz.Entities.Helper;
 using HamsterWarz.Entities.Models;
+using HamsterWarz.Entities.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using HamsterWarz.Entities.ViewModels;
 
 namespace DataAccess.Data.Services
 {
@@ -71,9 +73,16 @@ namespace DataAccess.Data.Services
             return list;
         }
 
-        public async Task AddHamster(Hamster newHamster)
+        public async Task AddHamster(HamsterViewModel newHamster)
         {
-            _context.Hamsters.Add(newHamster);
+            var hamster = new Hamster()
+            {
+                Name = newHamster.Name,
+                Age = newHamster.Age,
+                Loves = newHamster.Loves,
+                ImageUrl = newHamster.ImageUrl
+            };
+            _context.Hamsters.Add(hamster);
             await _context.SaveChangesAsync();
         }
     }

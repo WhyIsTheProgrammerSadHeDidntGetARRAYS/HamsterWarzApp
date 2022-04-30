@@ -1,6 +1,6 @@
 ﻿@using HamsterWarz.Client.Services
 @using HamsterWarz.Entities.Models
-@inject IHttpServiceProvider service
+@inject IRequestService service
 @page "/gallery"
 
 
@@ -11,7 +11,7 @@
 else
 {
     <div class="container">
-        <button class="btn btn-dark">Add new Hamster</button>
+        <a class="btn btn-outline-dark" href="/addhamster">Add new Hamster</a> @*TODO lägg till så att man navigerar till addhamster page*@
         <div class="row ">
             @foreach (var item in Hamsters)
             {
@@ -20,46 +20,51 @@ else
                         <h5 class="card-title">@item.Name</h5>
                         <h6><b>Interests:</b> @item.Loves</h6>
                         <div class="d-flex justify-content-between align-items-center">
-                            <a class="btn btn-sm btn-outline-dark" @onclick="() => LoadHamsterStatistics(item.Id)">Match History</a>
+                            <button class="btn btn-sm btn-outline-dark" @onclick="(() => {GetId(item.Id); OpenDialog();})">Hamsters defeated</button>
                         </div>
                     </ChildContent>
                 </HamsterCard>
             }
         </div>
     </div>
-    
+    @if (DialogOpen)
+    {
+        <ModalTest Title="Hamstertest's Deafeats'" OnClose="@CloseDialog" Id="@Id"></ModalTest>
+    }
 }
-@*<BSCarousel HasControls="true" HasIndicators="true">  
-    <BSCarouselItem>
-        <svg class="bd-placeholder-img bd-placeholder-img-lg d-block w-100" width="800" height="400" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: First slide" preserveAspectRatio="xMidYMid slice" focusable="false">
-            <rect width="100%" height="100%" fill="#777"></rect><text x="50%" y="50%" fill="#555" dy=".3em">First slide</text>
-        </svg>
-    </BSCarouselItem>
-    <BSCarouselItem>
-        <svg class="bd-placeholder-img bd-placeholder-img-lg d-block w-100" width="800" height="400" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Second slide" preserveAspectRatio="xMidYMid slice" focusable="false">
-            <rect width="100%" height="100%" fill="#666"></rect><text x="50%" y="50%" fill="#444" dy=".3em">Second slide</text>
-        </svg>
-    </BSCarouselItem>
-    <BSCarouselItem>
-        <svg class="bd-placeholder-img bd-placeholder-img-lg d-block w-100" width="800" height="400" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Third slide" preserveAspectRatio="xMidYMid slice" focusable="false">
-            <rect width="100%" height="100%" fill="#555"></rect><text x="50%" y="50%" fill="#333" dy=".3em">Third slide</text>
-        </svg>
-    </BSCarouselItem>
-</BSCarousel>*@
+
 
 @code {
     private IEnumerable<Hamster>? Hamsters { get; set; }
-    private IEnumerable<Hamster>? LosingHamsters { get; set; }
+    private Hamster? HamsterStatistics { get; set; }
+
+    int Id { get; set; }
+    private void GetId(int id)
+    {
+        Id = id;
+    }
+
+    private bool DialogOpen { get; set; }
+
+    private void OpenDialog()
+    {
+        DialogOpen = true;
+        StateHasChanged();
+    }
+    private void CloseDialog()
+    {
+        DialogOpen = false;
+        StateHasChanged();
+    }
 
     protected override async Task OnInitializedAsync()
     {
-        /*await Task.Delay(1000);*/ //TEST För att se hur mudblazor loading-component ser ut med lite delay
         Hamsters = await service.GetAllHamstersAsync();
     }
     private async void LoadHamsterStatistics(int id)
     {
         //TODO: fixa så att när man klickar på en hamster i galleriet så ska ett boostrap table visas med matchhistorik på hamstrar denne besegrat
-        LosingHamsters = await service.GetHamsterMatchData(id);
+        //LosingHamsters = await service.GetHamsterMatchData(id);
     }
 
 

@@ -1,5 +1,6 @@
 ﻿using HamsterWarz.Entities.Helper;
 using HamsterWarz.Entities.Models;
+using HamsterWarz.Entities.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,15 +10,15 @@ using System.Threading.Tasks;
 
 namespace HamsterWarz.Client.Services
 {
-    public class HttpServiceProvider : IHttpServiceProvider
+    public class RequestService : IRequestService
     {
         private readonly HttpClient _httpClient;
 
-        public HttpServiceProvider(HttpClient httpClient)
+        public RequestService(HttpClient httpClient)
         {
             _httpClient = httpClient;
         }
-        public async Task AddNewHamster(Hamster hamster)
+        public async Task AddNewHamster(HamsterViewModel hamster)
         {
             var response = await _httpClient.PostAsJsonAsync("/api/hamsters", hamster);
 
@@ -36,11 +37,17 @@ namespace HamsterWarz.Client.Services
             return content!;
 
         }
-        public async Task VoteHamster(IEnumerable<Hamster> hamsters, int winnerId)
+        public async Task VoteHamster(IEnumerable<Hamster> hamsters, int id)
         {
-            await _httpClient.PostAsJsonAsync("/api/hamsters/vote", new { hamsters, winnerId });
+            //otroligt konstig men fun fact - när man skickar det såhär, och tar emot objektet i sin api endpoint,
+            //så behöver properties i det objektet man tar emot heta samma som dessa parameterar som skickas.
+            //testa att att ändra detta post objekt's id parameter till winnerId, sätt en breakpoint i hamsterscontroller 
+            //vote-endpoint, och kolla på id't som tas emot
+
+            await _httpClient.PostAsJsonAsync("/api/hamsters/vote", new { hamsters, id });
         }
 
+        
         public async Task RegisterMatchData(IEnumerable<Hamster> hamsters, int id)
         {
             await _httpClient.PostAsJsonAsync("/api/matches/registermatch", new { hamsters, id });

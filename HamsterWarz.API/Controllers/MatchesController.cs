@@ -1,9 +1,6 @@
-﻿//using HamsterWarz.API.Data.Interfaces;
-using DataAccess.Data.Interfaces;
-using DataAccess.Data.Services;
-//using HamsterWarz.API.Helper;
-using HamsterWarz.Entities.Helper;
+﻿using HamsterWarz.Entities.Helper;
 using HamsterWarz.Entities.Models;
+using HamsterWarz.Entities.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
