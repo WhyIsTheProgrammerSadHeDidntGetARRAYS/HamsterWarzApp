@@ -18,5 +18,6 @@ namespace HamsterWarz.Entities.Interfaces
         Task<IEnumerable<Hamster>>? TopFiveLosers();
         Task<IEnumerable<Hamster>> GetHamsterCompetitorsAsync();
         Task VoteHamster(MatchWinnersDTO obj);
+        Task<int> DeleteHamster(int id);
     }
 }

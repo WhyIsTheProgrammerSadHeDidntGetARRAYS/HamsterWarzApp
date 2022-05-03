@@ -12,6 +12,7 @@ namespace HamsterWarz.Client.Services
     public interface IRequestService
     {
         Task AddNewHamster(HamsterViewModel hamster);
+        Task DeleteHamsterRequest(int id);
         Task<IEnumerable<Hamster>> GetAllHamstersAsync();
         Task<IEnumerable<Hamster>> GetRandomCompetitors();
         Task VoteHamster(IEnumerable<Hamster> hamsters, int winnerId);

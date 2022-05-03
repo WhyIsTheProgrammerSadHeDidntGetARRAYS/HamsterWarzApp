@@ -85,5 +85,18 @@ namespace DataAccess.Data.Services
             _context.Hamsters.Add(hamster);
             await _context.SaveChangesAsync();
         }
+
+        public async Task<int> DeleteHamster(int id)
+        {
+            var hamsterToDelete = await _context.Hamsters.FirstOrDefaultAsync(h => h.Id == id);
+            
+            if(hamsterToDelete != null)
+            {
+                _context.Hamsters.Remove(hamsterToDelete);
+                
+            }
+            await _context.SaveChangesAsync();
+            return id;
+        }
     }
 }

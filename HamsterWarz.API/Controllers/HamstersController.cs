@@ -12,7 +12,7 @@ namespace HamsterWarz.API.Controllers
     public class HamstersController : ControllerBase
     {
         private readonly IHamsterService _service;
-        
+
         public HamstersController(IHamsterService service)
         {
             _service = service;
@@ -22,8 +22,8 @@ namespace HamsterWarz.API.Controllers
         public async Task<IActionResult> GetAll()
         {
             var list = await _service.GetHamstersAsync();
-            
-            if(!list.Any())
+
+            if (!list.Any())
             {
                 return NotFound();
             }
@@ -35,13 +35,23 @@ namespace HamsterWarz.API.Controllers
         public async Task<IActionResult> GetById(int id)
         {
             var hamster = await _service.GetHamsterById(id)!;
-            
-            if(hamster == null)
+
+            if (hamster == null)
             {
                 return NotFound();
             }
-            
+
             return Ok(hamster);
+        }
+        [HttpDelete("delete/{id}")] //TODO: tror inte jag behöver en delete-route, utan räcker nog med id't bara
+        public async Task<IActionResult> DeleteHamster(int id)
+        {
+            if (id == 0)
+            {
+                return BadRequest();
+            }
+
+            return Ok(await _service.DeleteHamster(id));
         }
 
         [Route("random")]
@@ -49,7 +59,7 @@ namespace HamsterWarz.API.Controllers
         public async Task<IActionResult> GetHamsterCompetitors()
         {
             var list = await _service.GetHamsterCompetitorsAsync();
-            
+
             if (!list.Any())
             {
                 return BadRequest("No hamsters found");
@@ -65,7 +75,7 @@ namespace HamsterWarz.API.Controllers
         [HttpPost]
         public async Task<IActionResult> VoteForHamster(MatchWinnersDTO obj)
         {
-            if(obj == null)
+            if (obj == null)
             {
                 return NotFound();
             }
@@ -89,7 +99,7 @@ namespace HamsterWarz.API.Controllers
         public async Task<IActionResult> GetTopFiveHamsterCompetitors()
         {
             var topFive = await _service.TopFiveWinners()!;
-            
+
             if (!topFive.Any())
             {
                 return NotFound("Not enough matches to gather data");

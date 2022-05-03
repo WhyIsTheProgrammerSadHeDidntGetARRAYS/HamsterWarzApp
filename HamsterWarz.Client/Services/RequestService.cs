@@ -98,6 +98,9 @@ namespace HamsterWarz.Client.Services
             await _httpClient.DeleteAsync($"/api/matches/delete/{id}");
         }
 
-        
+        public async Task DeleteHamsterRequest(int id)
+        {
+            await _httpClient.DeleteAsync($"api/hamsters/delete/{id}");
+        }
     }
 }

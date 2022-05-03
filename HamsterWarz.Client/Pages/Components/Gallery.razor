@@ -20,7 +20,8 @@ else
                         <h5 class="card-title">@item.Name</h5>
                         <h6><b>Interests:</b> @item.Loves</h6>
                         <div class="d-flex justify-content-between align-items-center">
-                            <button class="btn btn-sm btn-outline-dark" @onclick="(() => {GetId(item.Id); OpenDialog();})">Hamsters defeated</button>
+                            <button class="btn btn-sm btn-outline-dark" @onclick="(() => { GetId(item.Id); OpenDialog(); })">Hamsters defeated</button>
+                            <button class="btn btn-sm btn-outline-danger" @onclick="() => DeleteHamster(item.Id)">Delete</button>
                         </div>
                     </ChildContent>
                 </HamsterCard>
@@ -29,7 +30,7 @@ else
     </div>
     @if (DialogOpen)
     {
-        <ModalTest Title="Hamstertest's Deafeats'" OnClose="@CloseDialog" Id="@Id"></ModalTest>
+        <ModalTest Title="Hamsters Defeated" OnClose="@CloseDialog" Id="@Id"></ModalTest>
     }
 }
 
@@ -37,8 +38,10 @@ else
 @code {
     private IEnumerable<Hamster>? Hamsters { get; set; }
     private Hamster? HamsterStatistics { get; set; }
-
+    //Har ett id här bara för att det blev något fel i foreach-loopen när jag skulle hämta ut id för en specifik hamster
     int Id { get; set; }
+
+    //denna metod hjälper till att sätta id't till det id hamstern man klickat på har
     private void GetId(int id)
     {
         Id = id;
@@ -61,10 +64,11 @@ else
     {
         Hamsters = await service.GetAllHamstersAsync();
     }
-    private async void LoadHamsterStatistics(int id)
+    private async void DeleteHamster(int id)
     {
-        //TODO: fixa så att när man klickar på en hamster i galleriet så ska ett boostrap table visas med matchhistorik på hamstrar denne besegrat
-        //LosingHamsters = await service.GetHamsterMatchData(id);
+        await service.DeleteHamsterRequest(id);
+        await OnInitializedAsync();
+        StateHasChanged();
     }
 
 
