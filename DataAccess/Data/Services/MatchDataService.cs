@@ -67,14 +67,16 @@ namespace DataAccess.Data.Services
         /// This method gets the id of a clicked hamster, and queries the database and selects all the hamsterobjects that the hamster in question has won against
         /// </summary>
         /// <param name="id"></param>
-        /// <returns></returns>
+        /// <returns>A list of DISTINCT hamsters</returns>
         public async Task<IEnumerable<Hamster>> GetSpecificHamsterMatchData(int id)
         {
             var list = await (from md in _context.MatchesData
                               join winner in _context.Hamsters on md.WinnerId equals winner.Id
                               join losers in _context.Hamsters on md.LoserId equals losers.Id
                               where winner.Id == id
-                              select losers).ToListAsync();
+                              select losers)
+                              .Distinct()
+                              .ToListAsync();
 
             return list;
         }

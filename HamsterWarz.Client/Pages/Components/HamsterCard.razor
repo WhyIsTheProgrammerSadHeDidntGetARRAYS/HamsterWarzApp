@@ -1,6 +1,6 @@
 ﻿@inject IRequestService service
 
-<div class="col col-4 mt-4 mb-4">
+<div class="col-4 mt-4 mb-4">
     <div class="card rounded">
         @*this tries to render the image path applied to the hamster, if no image was found, i render a static default image*@
         <img class="card-img-top img-fluid" src="@Hamster.ImageUrl" onerror="this.src='/Content/Images/hamstahh.png'" />

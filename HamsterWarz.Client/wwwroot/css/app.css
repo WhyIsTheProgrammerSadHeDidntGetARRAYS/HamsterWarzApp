@@ -1,36 +1,42 @@
 ﻿@import url('open-iconic/font/css/open-iconic-bootstrap.min.css');
 @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
 /*html, body {*/
-    /*font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;*/
-    /*font-family: 'Poppins', sans-serif;
+/*font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;*/
+/*font-family: 'Poppins', sans-serif;
 }*/
 * {
     font-family: 'Poppins', sans-serif;
 }
 
 .logo1 {
-    mix-blend-mode:multiply;
-    max-width:100%;
-    height:auto;
-    
+    mix-blend-mode: multiply;
+    max-width: 100%;
+    height: auto;
 }
+
 .card-img-top {
-    width:100%;
-    height:30vw;
-    object-fit:cover;
+    width: 100%;
+    height: 30vw;
+    object-fit: cover;
 }
+
 .homepage-title {
-    position:relative;
+    position: relative;
     top: 300px;
-    padding-left:740px;
-    color:black;
-    font-size:2vw;
+    padding-left: 740px;
+    color: black;
+    font-size: 2vw;
 }
+
 .homepage-paragraph {
     position: relative;
     top: 350px;
-    padding-left: 620px;
+    padding-left: 600px;
     color: black;
+}
+
+.homepage-h3 {
+    font-size: 1.5vw
 }
 
 
@@ -94,8 +100,8 @@ a, .btn-link {
         content: "An error has occurred."
     }
 
-    /*test*/
-    /*------------------------------*/
+/*test*/
+/*------------------------------*/
 
 .logo1 {
     background-color: rgba(255, 0, 0, 0.5);
