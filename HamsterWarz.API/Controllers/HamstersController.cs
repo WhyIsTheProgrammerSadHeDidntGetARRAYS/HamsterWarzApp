@@ -23,11 +23,13 @@ namespace HamsterWarz.API.Controllers
         {
             var list = await _service.GetHamstersAsync();
 
-            if (!list.Any())
-            {
-                return NotFound();
-            }
-            return Ok(list);
+            return list.Any() ? Ok(list) : NotFound();
+
+            //if (!list.Any())
+            //{
+            //    return NotFound();
+            //}
+            //return Ok(list);
         }
 
         [Route("{id}")]
@@ -36,12 +38,14 @@ namespace HamsterWarz.API.Controllers
         {
             var hamster = await _service.GetHamsterById(id)!;
 
-            if (hamster == null)
-            {
-                return NotFound();
-            }
+            return hamster != null ? Ok(hamster) : NotFound();
 
-            return Ok(hamster);
+            //if (hamster == null)
+            //{
+            //    return NotFound();
+            //}
+
+            //return Ok(hamster);
         }
         [HttpDelete("delete/{id}")] //TODO: tror inte jag behöver en delete-route, utan räcker nog med id't bara
         public async Task<IActionResult> DeleteHamster(int id)
